@@ -44,14 +44,14 @@ BEGIN
 
 	FETCH NEXT FROM cur_stu INTO @deviceNO,@id
 	WHILE @@FETCH_STATUS = 0
-        BEGIN
+	BEGIN
 		IF( YEAR(GETDATE())-CAST(SUBSTRING(@deviceNO,3,4) AS INT)) > @year
-			BEGIN
+		BEGIN
 			UPDATE T_device SET deviceState = '报废' WHERE id = @id
 			SET @totolScarp = @totolScarp + 1
 		END
-			ELSE
-			BEGIN
+		ELSE
+		BEGIN
 			UPDATE T_device SET deviceState = '正常' WHERE id = @id
 		END
 		FETCH NEXT FROM cur_stu INTO @deviceNO,@id
@@ -120,7 +120,7 @@ ALTER TABLE T_student ADD type NCHAR(10)
 select * FROM T_student
 
 GO
-CREATE PROCEDURE proc_judgeOpera
+alter PROCEDURE proc_judgeOpera
 AS
     BEGIN   
 		DECLARE @phone VARCHAR(11)
@@ -132,11 +132,11 @@ AS
 		FETCH NEXT FROM cur_Opera INTO @phone,@stuId
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
-			IF SUBSTRING(@phone,1,3) = '150' OR SUBSTRING(@phone,1,3) = '186' OR SUBSTRING(@phone,1,3) = '188'
+			IF SUBSTRING(@phone,1,3) in (150,186,188)
 			BEGIN
 				UPDATE T_student SET type = '移动' WHERE stuId = @stuId
 			END
-			ELSE IF SUBSTRING(@phone,1,3) = '130' OR SUBSTRING(@phone,1,3) = '136' OR SUBSTRING(@phone,1,3) = '139'
+			ELSE IF SUBSTRING(@phone,1,3) in (130,136,139)
 			BEGIN
 				UPDATE T_student SET type = '联通' WHERE stuId = @stuId
 			END

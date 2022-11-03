@@ -56,3 +56,10 @@ END
 CLOSE cur_stu
 DEALLOCATE cur_stu
 SELECT * FROM T_device
+
+SELECT * from T_Effect
+
+SELECT  dbo.T_Medicine.medicineId, dbo.T_Medicine.medicineName, dbo.T_Symptom.sDetail, dbo.T_Effect.edetail
+FROM     dbo.T_Effect INNER JOIN
+               dbo.T_Medicine ON dbo.T_Effect.eId = dbo.T_Medicine.effect INNER JOIN
+               dbo.T_Symptom ON dbo.T_Medicine.symptom = dbo.T_Symptom.sId

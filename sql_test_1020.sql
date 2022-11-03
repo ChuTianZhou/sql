@@ -69,7 +69,11 @@ AS
             when s2.score >= 80 then '良好'
             when s2.score >= 60 then '可以'
             else '挂科'
-        end as 等级
+        end as 等级,
+        CASE s1.gender
+            WHEN '男' THEN '帅哥'
+            WHEN '女' THEN '美女'
+        END
         from T_student s1 inner join T_stuCourse s2 on s1.stuId = s2.stuId
                            inner join T_course s3 on s2.courseId =s3.courseId
         where s1.stuname is not null
