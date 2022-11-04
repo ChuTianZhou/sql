@@ -88,7 +88,7 @@ GO
 PRINT(dbo.getRemaingDays(1952,2))
 
 GO
-ALTER FUNCTION getCourseInf(@collogeId INT,@courseId INT)
+CREATE FUNCTION getCourseInf(@collogeId INT,@courseId INT)
 RETURNS @CourseInf TABLE
 (stuname nvarchar(10),gender nchar(2),level nchar(1),memo nchar(10))
 AS
@@ -102,8 +102,7 @@ BEGIN
     DECLARE cur_stuInf CURSOR
     FOR SELECT t1.stuname,t1.gender,t2.score
         FROM T_student t1 inner join T_stuCourse t2 on t1.stuId = t2.stuId
-                        inner join T_course t3 on t2.courseId = t3.courseId
-                        inner join T_college t4 on t1.collegeId = t4.collegeId
+                        inner join T_college t3 on t1.collegeId = t3.collegeId
         WHERE t2.courseId = @courseId AND t4.collegeId = @collogeId
     OPEN cur_stuInf
     FETCH NEXT FROM cur_stuInf INTO @stuname,@gender,@score
